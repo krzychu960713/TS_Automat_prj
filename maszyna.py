@@ -96,18 +96,22 @@ class Generator(StateMachine):
 
 
 # create paths from transitions (exemplary)
-path_0 = ["m_0_1", "m_1_2"]    # wsuniecie wozka
-path_1 = ["m_2_1", "m_1_0"]    # wysuniecie wozka
+wsunWozek = ["m_0_1", "m_1_2"]    # wsuniecie wozka
+wysunWozek = ["m_2_1", "m_1_0"]    # wysuniecie wozka
 
-path_2 = path_0 + ["m_2_3", "m_3_7", "m_7_8", "m_8_2"]    # przybicie klocka A
-path_3 = path_0 + ["m_2_3", "m_3_5", "m_5_3", "m_3_7", "m_7_8", "m_8_2"] + path_1    # przybicie klocka A z alarmem
-path_4 = path_0 + ["m_2_4", "m_4_7", "m_7_8", "m_8_2"]    # przybicie klocka B
-path_5 = path_0 + ["m_2_4", "m_4_6", "m_6_4", "m_4_7", "m_7_8", "m_8_2"]    # przybicie klocka B z alarmem
-path_6 = path_0 + ["m_2_9", "m_9_10", "m_10_2"]    # ladowanie zszywek
-path_7 = path_0 + ["m_2_9", "m_9_11", "m_11_9", "m_9_10", "m_10_2"]  # ladowanie z alarmem
+przybijKlocekA = ["m_2_3", "m_3_7", "m_7_8", "m_8_2"]    # przybicie klocka A
+przybijKlocekAzAlarmem = ["m_2_3", "m_3_5", "m_5_3", "m_3_7", "m_7_8", "m_8_2"]  # przybicie klocka A z alarmem
+przybijKlocekB = ["m_2_4", "m_4_7", "m_7_8", "m_8_2"]    # przybicie klocka B
+przybijKlocekBzAlarmem = ["m_2_4", "m_4_6", "m_6_4", "m_4_7", "m_7_8", "m_8_2"]    # przybicie klocka B z alarmem
+ladujZszywki = ["m_2_9", "m_9_10", "m_10_2"]    # ladowanie zszywek
+ladujZszywkizAlarmem = ["m_2_9", "m_9_11", "m_11_9", "m_9_10", "m_10_2"]  # ladowanie z alarmem
 
+path_0 = wsunWozek + przybijKlocekA + ladujZszywki + przybijKlocekBzAlarmem + wysunWozek
+path_1 = wsunWozek + przybijKlocekA + przybijKlocekA + przybijKlocekA + wysunWozek
+path_2 = wsunWozek + przybijKlocekAzAlarmem + przybijKlocekBzAlarmem + ladujZszywkizAlarmem \
+         + przybijKlocekA + wysunWozek
 
-paths = [path_0, path_2, path_3, path_4, path_5, path_6, path_7]
+paths = [path_0, path_1, path_2]
 
 
 # execute paths
