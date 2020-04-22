@@ -128,20 +128,20 @@ for path in paths:
         # add slave
         if supervisor.current_state.value == "alarm_a":
             # TODO: automata 1 (for) slave1
-            print("Stachu przynies klockow A")
+            print("Nalezy dolozyc klockow A")
             ...
 
         if supervisor.current_state.value == "alarm_b":
             # TODO: automata 2 (for) slave2
-            print("Staszek przynies klockow B")
+            print("Nalezy dolozyc klockow B")
             ...
 
         if supervisor.current_state.value == "alarm_zszywki":
             # TODO: automata 3 (for) slave3
-            print("Jerzy załaduj proce")
+            print("Nalezy dolozyc zszywek")
             ...
 
         if supervisor.current_state.value == "wozek_wysuniety":
             # TODO: automata 3 (for) slave3
-            print("Jan ciag za wajche")
+            print("Detal gotowy do odbioru")
             ...
