@@ -4,15 +4,16 @@ from automaty.robot import *
 from automaty.ladownica import *
 from automaty.przybijanie import *
 
-# przykladowy czujnik
-czujnik_zszywek = False
 
 # create paths from transitions (exemplary)
 
-path_0 = wsunWozek
-
-
+path_0 = wsunWozek + wysunWozek
 paths = [path_0]
+
+path0_przybijanie = [przybijKlocekAzAlarmem, przybijKlocekA]
+path1_przybijanie = [przybijKlocekA, przybijKlocekB, przybijKlocekA]
+path2_przybijanie = [przybijKlocekB, przybijKlocekBzAlarmem, przybijKlocekA]
+paths_przybijanie = path0_przybijanie + path1_przybijanie + path2_przybijanie
 
 # execute paths
 for path in paths:
@@ -26,12 +27,16 @@ for path in paths:
         master_transitions_main[event]._run(supervisor_main)
         print(supervisor_main.current_state)
 
-        # tutaj sprawdza czy są zszywki jak nie uruchamia automat podrzedny ktory to robi
         if supervisor_main.current_state.value == "robot_gotowy":
-            for path_1 in ladujZszywki:
-                supervisor_zszywacz = Generator.create_master(master_states_zszywacz, master_transitions_zszywacz)
-                for eventx in ladujZszywki:
-                    # launch a transition in our supervisor
-                    master_transitions_zszywacz[eventx]._run(supervisor_zszywacz)
-                    print(supervisor_zszywacz.current_state)
-                    print("ZAŁADOWAŁ ZSZYWKI")
+            for path_p in paths_przybijanie:
+                supervisor_przybijanie = Generator.create_master(master_states_przybicie, master_transitions_przybicie)
+                for event_p in path_p:
+                    master_transitions_przybicie[event_p]._run(supervisor_przybijanie)
+                    print(supervisor_przybijanie.current_state)
+                print('Klocek przybity')
+
+            supervisor_zszywacz = Generator.create_master(master_states_zszywacz, master_transitions_zszywacz)
+            for event_z in ladujZszywki:
+                master_transitions_zszywacz[event_z]._run(supervisor_zszywacz)
+                print(supervisor_zszywacz.current_state)
+                print("ZAŁADOWAŁ ZSZYWKI")

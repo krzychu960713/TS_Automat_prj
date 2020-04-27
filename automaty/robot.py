@@ -13,7 +13,7 @@ master_states_main = [State(**opt) for opt in options_main]
 form_to_main = [
     [0, [1]],
     [1, [0, 2]],
-    [2, [0]]
+    [2, [1]]
 ]
 
 # create transitions for a master (as a dict)

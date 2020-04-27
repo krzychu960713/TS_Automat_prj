@@ -1,7 +1,7 @@
 from statemachine import State, Transition
 # define states for a master (way of passing args to class)
 options_przybicie = [
-    {"name": "Robot pracuje", "initial": False, "value": "robot_pracuje"},  # 0
+    {"name": "Robot pracuje", "initial": True, "value": "robot_pracuje"},  # 0
     {"name": "Pozycja A", "initial": False, "value": "pozycja_a"},   # 1
     {"name": "Pozycja B", "initial": False, "value": "pozycja_b"},   # 2
     {"name": "Alarm A", "initial": False, "value": "alarm_a"},   # 3
