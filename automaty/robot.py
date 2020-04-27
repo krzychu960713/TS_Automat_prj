@@ -3,14 +3,8 @@ from statemachine import State, Transition
 options_main = [
     {"name": "Wozek wysuniety", "initial": True, "value": "wozek_wysuniety"},   # 0
     {"name": "Wozek wsuniety", "initial": False, "value": "wozek_wsuniety"},    # 1
-    {"name": "Robot pracuje", "initial": False, "value": "robot_pracuje"},   # 2
-    {"name": "Pozycja A", "initial": False, "value": "pozycja_a"},   # 3
-    {"name": "Pozycja B", "initial": False, "value": "pozycja_b"},   # 4
-    {"name": "Alarm A", "initial": False, "value": "alarm_a"},   # 5
-    {"name": "Alarm B", "initial": False, "value": "alarm_b"},   # 6
-    {"name": "Zlap klocek", "initial": False, "value": "zlap_klocek"},   # 7
-    {"name": "Przybij klocek", "initial": False, "value": "przybij_klocek"}]   # 8
-
+    {"name": "Robot gotowy", "initial": False, "value": "robot_gotowy"}   # 2
+]
 # create State objects for a master
 # ** -> unpack dict to args
 master_states_main = [State(**opt) for opt in options_main]
@@ -19,13 +13,7 @@ master_states_main = [State(**opt) for opt in options_main]
 form_to_main = [
     [0, [1]],
     [1, [0, 2]],
-    [2, [1, 3, 4]],
-    [3, [5, 7]],
-    [4, [6, 7]],
-    [5, [3]],
-    [6, [4]],
-    [7, [8]],
-    [8, [2]]
+    [2, [0]]
 ]
 
 # create transitions for a master (as a dict)
@@ -42,3 +30,6 @@ for indices in form_to_main:
 
         # add transition to source state
         master_states_main[from_idx].transitions.append(transition)
+
+wsunWozek = ["m_0_1", "m_1_2"]    # wsuniecie wozka
+wysunWozek = ["m_2_1", "m_1_0"]    # wysuniecie wozka

@@ -28,3 +28,6 @@ for indices in form_to_zszywacz:
 
         # add transition to source state
         master_states_zszywacz[from_idx].transitions.append(transition)
+
+ladujZszywki = ["z_0_1"]
+ladujZszywkizAlarmem = ["z_0_2", "z_2_0", "z_0_1"]
