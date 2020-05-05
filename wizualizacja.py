@@ -1,5 +1,5 @@
 import networkx as nx
-from networkx.drawing.nx_agraph import write_dot, graphviz_layout, to_agraph
+from networkx.drawing.nx_agraph import to_agraph
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 
