@@ -1,9 +1,39 @@
 import networkx as nx
-import numpy as np
 from networkx.drawing.nx_agraph import write_dot, graphviz_layout, to_agraph
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
-import pylab
+
+
+def check_block(Robot):
+    lists = list(Robot)
+    blockades = False
+    for i in range(len(lists)):
+        for j in range(len(lists)):
+            source = lists[i]
+            target = lists[j]
+            is_path = nx.has_path(Robot, source=source, target=target)
+            source.replace('\n', ' ')
+            target.replace('\n', ' ')
+            if not is_path:
+                print("Jest blokada miedzy " + source + " a " + target)
+                blockades = True
+                break
+    if not blockades:
+        print("Brak blokad")
+
+
+def show_path(Robot, source, target):
+    lists = list(Robot)
+    for i in range(len(lists)):
+        for j in range(len(lists)):
+            is_path = nx.has_path(Robot, source=source, target=target)
+            path = nx.shortest_path(Robot, source=source, target=target)
+            if not is_path:
+                print("NO PATH")
+                break
+    for k in range(len(path)):
+        path[k] = path[k].replace('\n', ' ')
+    print(path)
 
 
 Robot = nx.MultiDiGraph()
@@ -30,41 +60,8 @@ Ladowanie.add_edges_from([(s4,s13),(s13,s4),(s13,s15),(s15,s13),(s15,s15),(s13,s
 Robot.add_edges_from(Przybijanie.edges)
 Robot.add_edges_from(Ladowanie.edges)
 
-
-list = list(Robot)
-
-
-def check_block():
-    blockades = False
-    for i in range(len(list)):
-        for j in range(len(list)):
-            source = list[i]
-            target = list[j]
-            is_path = nx.has_path(Robot, source=source, target=target)
-            source.replace('\n', ' ')
-            target.replace('\n', ' ')
-            if not is_path:
-                print("Jest blokada miedzy " + source + " a " + target)
-                blockades = True
-                break
-    if not blockades:
-        print("Brak blokad")
-
-
-def show_path(source, target):
-    for i in range(len(list)):
-        for j in range(len(list)):
-            is_path = nx.has_path(Robot, source=source, target=target)
-            path = nx.shortest_path(Robot, source=source, target=target)
-            if not is_path:
-                print("NO PATH")
-                break
-    for k in range(len(path)):
-        path[k] = path[k].replace('\n', ' ')
-    print(path)
-
-check_block()
-show_path(s7,s8)
+check_block(Robot)
+show_path(Robot, s7, s8)
 
 Robot.graph['edge'] = {'arrowsize': '0.6', 'splines': 'curved'}
 Robot.graph['graph'] = {'scale': '4'}
@@ -73,5 +70,3 @@ Graf.layout('dot')
 Graf.draw('Graf.png')
 img = mpimg.imread('Graf.png')
 imgplot = plt.show(img)
-# plt.axis('off')
-# plt.show(imgplot)
