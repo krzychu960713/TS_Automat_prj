@@ -30,23 +30,26 @@ Ladowanie.add_edges_from([(s4,s13),(s13,s4),(s13,s15),(s15,s13),(s15,s15),(s13,s
 Robot.add_edges_from(Przybijanie.edges)
 Robot.add_edges_from(Ladowanie.edges)
 
-blockades = False
+
 list = list(Robot)
 
-for i in range(len(list)):
-    for j in range(len(list)):
-        source = list[i]
-        target = list[j]
-        is_path = nx.has_path(Robot, source=source, target=target)
-        # print(is_path, source, target)
-        source.replace('\n', ' ')
-        target.replace('\n', ' ')
-        if not is_path:
-            print("Jest blokada miedzy " + source + " a " + target)
-            blockades = True
-            break
-if not blockades:
-    print("Brak blokad")
+
+def check_block():
+    blockades = False
+    for i in range(len(list)):
+        for j in range(len(list)):
+            source = list[i]
+            target = list[j]
+            is_path = nx.has_path(Robot, source=source, target=target)
+            source.replace('\n', ' ')
+            target.replace('\n', ' ')
+            if not is_path:
+                print("Jest blokada miedzy " + source + " a " + target)
+                blockades = True
+                break
+    if not blockades:
+        print("Brak blokad")
+
 
 def show_path(source, target):
     for i in range(len(list)):
@@ -60,6 +63,7 @@ def show_path(source, target):
         path[k] = path[k].replace('\n', ' ')
     print(path)
 
+check_block()
 show_path(s7,s8)
 
 Robot.graph['edge'] = {'arrowsize': '0.6', 'splines': 'curved'}
