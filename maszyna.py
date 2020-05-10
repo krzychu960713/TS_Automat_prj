@@ -16,7 +16,8 @@ paths = [path_0]
 path0_przybijanie = [przybijKlocekAzAlarmem, przybijKlocekA]
 path1_przybijanie = [przybijKlocekA, przybijKlocekB, przybijKlocekA]
 path2_przybijanie = [przybijKlocekB, przybijKlocekBzAlarmem, przybijKlocekA]
-paths_przybijanie = path0_przybijanie + path1_przybijanie + path2_przybijanie
+# paths_przybijanie = path0_przybijanie + path1_przybijanie + path2_przybijanie
+paths_przybijanie = path1_przybijanie
 
 robotPath = []
 start, robotPath = init(model, robotPath)
@@ -39,12 +40,30 @@ for path in paths:
                 for event_p in path_p:
                     master_transitions_przybicie[event_p]._run(supervisor_przybijanie)
                     print(supervisor_przybijanie.current_state)
+                    if supervisor_przybijanie.current_state.value == "pozycja_a":
+                        start, robotPath = moveA(model, robotPath, start)
+                        start, robotPath = takeA(model, robotPath, start)
+                        start, robotPath = moveA(model, robotPath, start)
+                    if supervisor_przybijanie.current_state.value == "pozycja_b":
+                        start, robotPath = moveB(model, robotPath, start)
+                        start, robotPath = takeB(model, robotPath, start)
+                        start, robotPath = moveB(model, robotPath, start)
+                    if supervisor_przybijanie.current_state.value == "przybij_klocek":
+                        start, robotPath = moveSt(model, robotPath, start)
+                        start, robotPath = getSt(model, robotPath, start)
+                        start, robotPath = moveSt(model, robotPath, start)
                 print('Klocek przybity')
 
             supervisor_zszywacz = Generator.create_master(master_states_zszywacz, master_transitions_zszywacz)
             for event_z in ladujZszywki:
                 master_transitions_zszywacz[event_z]._run(supervisor_zszywacz)
                 print(supervisor_zszywacz.current_state)
-                print("ZAŁADOWAŁ ZSZYWKI")
+                if supervisor_zszywacz.current_state.value == 'pozycja_arsenal':
+                    start, robotPath = moveAr(model, robotPath, start)
+                    start, robotPath = takeAr(model, robotPath, start)
+                    start, robotPath = moveAr(model, robotPath, start)
+            print("ZAŁADOWAŁ ZSZYWKI")
+        if supervisor_main.current_state.value == "wozek_wysuniety":
+            start, robotPath = moveSt(model, robotPath, start)
 
-model.animate(stances=robotPath, frame_rate=30, unit='deg')
+model.animate(stances=robotPath, frame_rate=90, unit='deg')
