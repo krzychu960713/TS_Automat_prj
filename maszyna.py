@@ -3,10 +3,13 @@ from klasy import Generator
 from automaty.robot import *
 from automaty.ladownica import *
 from automaty.przybijanie import *
+from robopy.robotFunction import *
 
+import robopy.base.model as robot
+
+model = robot.Puma560()
 
 # create paths from transitions (exemplary)
-
 path_0 = wsunWozek + wysunWozek
 paths = [path_0]
 
@@ -14,6 +17,9 @@ path0_przybijanie = [przybijKlocekAzAlarmem, przybijKlocekA]
 path1_przybijanie = [przybijKlocekA, przybijKlocekB, przybijKlocekA]
 path2_przybijanie = [przybijKlocekB, przybijKlocekBzAlarmem, przybijKlocekA]
 paths_przybijanie = path0_przybijanie + path1_przybijanie + path2_przybijanie
+
+robotPath = []
+start, robotPath = init(model, robotPath)
 
 # execute paths
 for path in paths:
@@ -40,3 +46,5 @@ for path in paths:
                 master_transitions_zszywacz[event_z]._run(supervisor_zszywacz)
                 print(supervisor_zszywacz.current_state)
                 print("ZAŁADOWAŁ ZSZYWKI")
+
+model.animate(stances=robotPath, frame_rate=30, unit='deg')
