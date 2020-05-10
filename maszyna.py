@@ -3,7 +3,7 @@ from klasy import Generator
 from automaty.robot import *
 from automaty.ladownica import *
 from automaty.przybijanie import *
-from robopy.robotFunction import *
+from robo.robotFunction import *
 
 import robopy.base.model as robot
 
